@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SocketMan</string>
+    <string name="loading">Loading...</string>
+    <string name="input_text">Input text...</string>
+    <string name="already_connected_to_web_socket">Already connected to web socket!</string>
+    <string name="connected_to_web_socket">Connected to web socket!</string>
+    <string name="disconnected_from_web_socket">Disconnected from web socket!</string>
+    <string name="error_empty_message">Message is a required field.</string>
+</resources>
