@@ -4,4 +4,5 @@
     <dimen name="text_size_default">14sp</dimen>
     <dimen name="text_size_small">8sp</dimen>
     <dimen name="ic_send_left_margin">10dp</dimen>
+    <dimen name="button_margins">8dp</dimen>
 </resources>

@@ -7,20 +7,20 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by Željko Plesac on 05/04/16.
+ * Created by Željko Plesac on 09/04/16.
  */
 @Module
 public class MainModule {
 
-    private MainView view;
+    private MainView mainView;
 
-    public MainModule(MainView view) {
-        this.view = view;
+    public MainModule(MainView mainView) {
+        this.mainView = mainView;
     }
 
     @Provides
     public MainView provideView() {
-        return view;
+        return mainView;
     }
 
     @Provides

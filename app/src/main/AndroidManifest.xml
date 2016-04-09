@@ -20,6 +20,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+                android:name=".activities.sockets.AndroidAsyncActivity"
+                android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+                android:name=".activities.sockets.AutobahnActivity"
+                android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>

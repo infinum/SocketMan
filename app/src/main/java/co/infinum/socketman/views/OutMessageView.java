@@ -6,9 +6,6 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.util.Date;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import co.infinum.socketman.R;

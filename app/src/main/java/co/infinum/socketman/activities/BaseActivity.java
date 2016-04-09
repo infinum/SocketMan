@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import co.infinum.socketman.R;
@@ -47,6 +48,25 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     public void showError(@NonNull String message) {
         if (!isFinishing()) {
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    protected void setActionBarTitle(String title) {
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setLogo(android.R.color.transparent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
