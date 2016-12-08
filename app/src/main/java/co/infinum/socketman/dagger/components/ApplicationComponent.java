@@ -3,15 +3,16 @@ package co.infinum.socketman.dagger.components;
 import javax.inject.Singleton;
 
 import co.infinum.socketman.SocketManApp;
+import co.infinum.socketman.dagger.modules.AndroidAsyncModule;
+import co.infinum.socketman.dagger.modules.AutobahnModule;
 import co.infinum.socketman.dagger.modules.MainModule;
-import co.infinum.socketman.dagger.modules.WebSocketModule;
 import dagger.Component;
 
 /**
  * Created by Željko Plesac on 03/04/16.
  */
 @Singleton
-@Component(modules = WebSocketModule.class)
+@Component
 public interface ApplicationComponent {
 
     /**
@@ -22,11 +23,26 @@ public interface ApplicationComponent {
     void inject(SocketManApp socketManApp);
 
     /**
+     * AndroidAsync activity component.
+     *
+     * @param androidAsyncModule AndroidAsync module
+     * @return AndroidAsync activity component for injecting View, Presenter and Interactor
+     */
+    AndroidAsyncComponent plus(AndroidAsyncModule androidAsyncModule);
+
+    /**
      * Main activity component.
      *
-     * @param mainModule Main module
+     * @param mainModule AndroidAsync module
      * @return Main activity component for injecting View, Presenter and Interactor
      */
     MainComponent plus(MainModule mainModule);
 
+    /**
+     * AutobahnModule activity component.
+     *
+     * @param autobahnModule AutobahnModule module
+     * @return AutobahnModule activity component for injecting View, Presenter and Interactor
+     */
+    AutobahnComponent plus(AutobahnModule autobahnModule);
 }

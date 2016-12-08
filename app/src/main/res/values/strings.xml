@@ -6,4 +6,6 @@
     <string name="connected_to_web_socket">Connected to web socket!</string>
     <string name="disconnected_from_web_socket">Disconnected from web socket!</string>
     <string name="error_empty_message">Message is a required field.</string>
+    <string name="autobahn">Autobahn</string>
+    <string name="android_async">Android Async</string>
 </resources>
