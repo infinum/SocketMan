@@ -12,6 +12,7 @@ import co.infinum.socketman.R;
 import co.infinum.socketman.SocketManApp;
 import co.infinum.socketman.activities.sockets.AndroidAsyncActivity;
 import co.infinum.socketman.activities.sockets.AutobahnActivity;
+import co.infinum.socketman.activities.sockets.NVActivity;
 import co.infinum.socketman.dagger.modules.MainModule;
 import co.infinum.socketman.mvp.presenters.MainPresenter;
 import co.infinum.socketman.mvp.views.MainView;
@@ -49,6 +50,12 @@ public class MainActivity extends BaseActivity implements MainView {
     @OnClick(R.id.button_autobahn)
     protected void onAutobahnButtonClicked() {
         presenter.onAutobahnButtonClicked();
+    }
+
+    @OnClick(R.id.button_socket)
+    protected void onNVSocketClick() {
+        Intent intent = NVActivity.buildIntent(this);
+        startActivity(intent);
     }
 
     @Override

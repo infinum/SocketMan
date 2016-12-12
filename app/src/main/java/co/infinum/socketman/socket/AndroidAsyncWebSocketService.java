@@ -29,7 +29,7 @@ public class AndroidAsyncWebSocketService implements WebSocketsService, WebSocke
 
 
     @Override
-    public void connect(final ConnectedCallback connectedCallback) {
+    public void connect(String endpoint, final ConnectedCallback connectedCallback) {
         if (isConnected()) {
             connectedCallback.onAlreadyConnected();
             return;

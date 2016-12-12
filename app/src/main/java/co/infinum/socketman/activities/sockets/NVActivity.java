@@ -1,8 +1,14 @@
 package co.infinum.socketman.activities.sockets;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -15,13 +21,16 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.infinum.socketman.R;
+import co.infinum.socketman.SocketManApp;
 import co.infinum.socketman.activities.BaseActivity;
-import co.infinum.socketman.mvp.presenters.SocketPresenter;
-import co.infinum.socketman.mvp.views.SocketView;
+import co.infinum.socketman.dagger.modules.NVModule;
+import co.infinum.socketman.mvp.presenters.NVPresenter;
+import co.infinum.socketman.mvp.views.NVView;
+import co.infinum.socketman.utils.DialogUtils;
 import co.infinum.socketman.views.InMessageView;
 import co.infinum.socketman.views.OutMessageView;
 
-public abstract class SocketActivity extends BaseActivity implements SocketView {
+public class NVActivity extends BaseActivity implements NVView {
 
     @Bind(R.id.et_text)
     EditText etText;
@@ -39,7 +48,17 @@ public abstract class SocketActivity extends BaseActivity implements SocketView 
     TextView tvLog;
 
     @Inject
-    SocketPresenter presenter;
+    NVPresenter presenter;
+
+    public static Intent buildIntent(Context context) {
+        Intent intent = new Intent(context, NVActivity.class);
+        return intent;
+    }
+
+    @Override
+    protected void initDependencies() {
+        SocketManApp.getInstance().getAppComponent().plus(new NVModule(this)).inject(this);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,13 +76,43 @@ public abstract class SocketActivity extends BaseActivity implements SocketView 
     }
 
     @Override
+    public void initUI() {
+        logScrollView.setVisibility(View.VISIBLE);
+        tvLog.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_sv, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_settings:
+                presenter.onSettingsClicked();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         presenter.unsubscribeFromSocket();
     }
 
     @Override
-    public void initUI() {
+    public void appendSocketLog(String log) {
+        tvLog.append(log);
+    }
+
+    @Override
+    public void cleanSocketLog() {
+        tvLog.setText("");
     }
 
     @Override
@@ -101,5 +150,15 @@ public abstract class SocketActivity extends BaseActivity implements SocketView 
     @OnClick(R.id.button_send)
     void onSendButtonClicked() {
         presenter.onSendClicked(etText.getText().toString());
+    }
+
+    @Override
+    public void showEndpointDialog(String endpoint) {
+        DialogUtils.showEndpointDialog(this, endpoint, new DialogUtils.EndpointDialogListener() {
+            @Override
+            public void onEndpointChanged(String newEndpoint) {
+                presenter.onEndpointChanged(newEndpoint);
+            }
+        });
     }
 }

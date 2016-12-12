@@ -8,4 +8,9 @@
     <string name="error_empty_message">Message is a required field.</string>
     <string name="autobahn">Autobahn</string>
     <string name="android_async">Android Async</string>
+    <string name="settings">Settings</string>
+    <string name="socket">Socket</string>
+    <string name="socket_endpoint">Socket endpoint</string>
+    <string name="update">Update</string>
+    <string name="dismiss">Dismiss</string>
 </resources>

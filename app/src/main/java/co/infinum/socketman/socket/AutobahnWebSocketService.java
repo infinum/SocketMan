@@ -25,7 +25,7 @@ public class AutobahnWebSocketService implements WebSocketsService {
 
 
     @Override
-    public void connect(ConnectedCallback callback) {
+    public void connect(String endpoint, ConnectedCallback callback) {
         if (BuildConfig.SOCKET_PROTOCOL.equals("wss")) {
             connectedCallback.onWebSocketException(new SocketProtocolException("Autobahn doesn't have support for WSS"), false);
             return;

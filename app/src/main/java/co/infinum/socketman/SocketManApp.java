@@ -4,6 +4,7 @@ import android.app.Application;
 
 import co.infinum.socketman.dagger.components.ApplicationComponent;
 import co.infinum.socketman.dagger.components.DaggerApplicationComponent;
+import timber.log.Timber;
 
 /**
  * Created by Željko Plesac on 03/04/16.
@@ -21,6 +22,10 @@ public class SocketManApp extends Application {
 
         appComponent = DaggerApplicationComponent.builder().build();
         appComponent.inject(this);
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
     }
 
     public ApplicationComponent getAppComponent() {

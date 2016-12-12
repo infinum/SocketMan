@@ -8,24 +8,29 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import co.infinum.socketman.R;
+import co.infinum.socketman.SocketManApp;
 import co.infinum.socketman.interfaces.WebSocketsService;
+import co.infinum.socketman.mvp.presenters.NVPresenter;
 import co.infinum.socketman.mvp.presenters.PresenterTemplate;
-import co.infinum.socketman.mvp.presenters.SocketPresenter;
-import co.infinum.socketman.mvp.views.SocketView;
+import co.infinum.socketman.mvp.views.NVView;
+import co.infinum.socketman.utils.PrefsUtils;
 import co.infinum.socketman.utils.StringUtils;
 
-/**
- * Created by Željko Plesac on 05/04/16.
- */
-public class SocketPresenterImpl extends PresenterTemplate<SocketView, Void> implements SocketPresenter,
+public class NVPresenterImpl extends PresenterTemplate<NVView, Void> implements NVPresenter,
         WebSocketsService.ConnectedCallback, WebSocketsService.MessagesCallback {
+
+    private static final String DEFAULT_ENDPOINT = "wss://socket2.bigbetworld.com:8001/LiveData";
 
     private WebSocketsService webSocketsService;
 
+    private String endpoint;
+
     @Inject
-    public SocketPresenterImpl(SocketView view, WebSocketsService webSocketsService) {
+    public NVPresenterImpl(NVView view, WebSocketsService webSocketsService) {
         super(view, null);
         this.webSocketsService = webSocketsService;
+
+        endpoint = PrefsUtils.getStringFromPreferences(SocketManApp.getInstance(), PrefsUtils.ENDPOINT_KEY, DEFAULT_ENDPOINT);
     }
 
     @Override
@@ -56,12 +61,26 @@ public class SocketPresenterImpl extends PresenterTemplate<SocketView, Void> imp
 
     @Override
     public void subscribeToSocket() {
-//        webSocketsService.connect(this);
+        webSocketsService.connect(endpoint, this);
     }
 
     @Override
     public void cancel() {
         unsubscribeFromSocket();
+    }
+
+    @Override
+    public void onSettingsClicked() {
+        view.showEndpointDialog(endpoint);
+    }
+
+    @Override
+    public void onEndpointChanged(String newEndpoint) {
+        this.endpoint = newEndpoint;
+        webSocketsService.disconnect();
+
+        view.cleanSocketLog();
+        webSocketsService.connect(endpoint, this);
     }
 
     // region Socket messages callbacks
@@ -105,7 +124,7 @@ public class SocketPresenterImpl extends PresenterTemplate<SocketView, Void> imp
 
     @Override
     public void showLog(String log) {
-
+        view.appendSocketLog(log + "\n\n");
     }
 
     // endregion

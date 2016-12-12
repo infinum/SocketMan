@@ -23,6 +23,8 @@ public interface WebSocketsService {
         void onAlreadyConnected();
 
         void onWebSocketException(Exception ex, boolean isSocketStillConnected);
+
+        void showLog(String log);
     }
 
     interface MessagesCallback {
@@ -37,7 +39,7 @@ public interface WebSocketsService {
      *
      * @param connectedCallback callback that will notify that web socket is connected
      */
-    void connect(ConnectedCallback connectedCallback);
+    void connect(String endpoint, ConnectedCallback connectedCallback);
 
     void setMessagesListener(MessagesCallback messagesCallback);
 

@@ -6,6 +6,7 @@ import co.infinum.socketman.SocketManApp;
 import co.infinum.socketman.dagger.modules.AndroidAsyncModule;
 import co.infinum.socketman.dagger.modules.AutobahnModule;
 import co.infinum.socketman.dagger.modules.MainModule;
+import co.infinum.socketman.dagger.modules.NVModule;
 import dagger.Component;
 
 /**
@@ -45,4 +46,12 @@ public interface ApplicationComponent {
      * @return AutobahnModule activity component for injecting View, Presenter and Interactor
      */
     AutobahnComponent plus(AutobahnModule autobahnModule);
+
+    /**
+     * NVModule activity component.
+     *
+     * @param nvModule NVModule module
+     * @return NVModule activity component for injecting View, Presenter and Interactor
+     */
+    NVComponent plus(NVModule nvModule);
 }

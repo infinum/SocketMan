@@ -1,43 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:background="@android:color/white"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@android:color/white">
 
     <ScrollView
-            android:layout_width="match_parent" android:layout_height="match_parent"
             android:id="@+id/scrollView"
-            android:layout_above="@+id/layout_message"
-            android:fillViewport="true">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
         <LinearLayout
+                android:id="@+id/content_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:id="@+id/content_layout"/>
+                android:orientation="vertical"/>
 
     </ScrollView>
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:layout_alignParentBottom="true"
-                  android:orientation="horizontal"
-                  android:id="@+id/layout_message"
-                  android:padding="@dimen/default_padding">
+    <LinearLayout
+            android:id="@+id/layout_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/default_padding">
 
         <EditText
                 android:id="@+id/et_text"
                 android:layout_width="0dp"
-                android:layout_weight="1" android:layout_height="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:textSize="@dimen/text_size_default"
                 android:hint="@string/input_text"/>
 
         <ImageButton
-                android:layout_marginLeft="@dimen/ic_send_left_margin"
                 android:id="@+id/button_send"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ic_send_left_margin"
                 android:layout_gravity="center_vertical"
                 android:background="@android:drawable/ic_menu_send"/>
     </LinearLayout>
 
-</RelativeLayout>
+    <ScrollView
+            android:visibility="gone"
+            android:id="@+id/sv_log"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4">
+
+        <TextView
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
+                android:id="@+id/tv_log"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+
+    </ScrollView>
+</LinearLayout>
